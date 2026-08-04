@@ -1,3 +1,4 @@
+
 langchain
 langchain-community
 langchain-openai
@@ -14,3 +15,21 @@ pathspec
 tqdm
 python-dotenv
 requests
+
+langchain
+langchain-community
+langchain-openai
+langchain-text-splitters
+pymupdf
+pypdf 
+gitpython
+sentence-transformers
+chromadb
+langchain-google-genai
+streamlit
+tiktoken
+pathspec
+tqdm
+python-dotenv
+requests
+
