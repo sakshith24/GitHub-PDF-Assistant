@@ -1,9 +1,11 @@
 import os
 import requests
+import shutil
 from git import Repo
 from urllib.request import urlopen , URLERROR
 from urllib.parse import urlsplit, urlparse
 from pathlib import Path
+from langchain_core.documents import Document
 # from posixpath import basename, dirname
 
 url = input("Enter the github url : ")
@@ -51,11 +53,49 @@ else:
     print('INVALID url ...')
 
 destination = Path("data") / "repos" / repo_name
-    
-repo = Repo.clone_from(url , destination)
+
+need_to_clone = True
+# CHECK IF THERE IS SAME URL 
+if destination.exists():
+    while True:
+        choice = input(f"This {repo_name} reopsitory already exist, Delete (D) or Reuse (R)?: ").strip().upper()
+
+        if choice in ("D", "R"):
+            break  # Valid input received, exit the validation loop
+
+        print("Invalid choice! Please enter 'D' or 'R'.\n")
+    if choice == "D":
+        shutil.rmtree(destination)
+        need_to_clone = True
+    elif choice =="R":
+        need_to_clone = False
+        
+
+if need_to_clone:
+    repo = Repo.clone_from(url , destination)
+
 
 # READING THE REPO_NAME
-for p in repo:
-    with open("p" , "r") as file:
-        content = file.read()
-        print(content)
+documents = []
+extensions = ('.py', '.md' , '.json')
+
+for file_path in Path(destination).rglob('*'):
+    if '.git' in file_path.parts:
+        continue
+
+    if file_path.is_file() and file_path.suffix.lower() in extensions :
+        try:
+            text = file_path.read_text(encoding='utf-8')
+            documents.append(
+                Document(
+                    page_content= text,
+                    metadata = {
+                    "path":str(file_path),
+                    "extension": file_path.suffix.lower(),
+                    "length":len(text)
+                    }
+                )
+            )
+        except(UnicodeError , PermissionError):
+            continue
+    
