@@ -70,12 +70,11 @@ def load_pdf() -> list[Document]:
     pdf_path = get_pdf_path()  
     loader = PyMuPDFLoader(pdf_path)
     documents = loader.load()
-
-    # for i,page in enumerate(documents , start = 1):
-    #     # print(f"---Page {i+1}---")
-    #     print(page.page_content)
-    #     print(page.metadata)
-    
-    # print("No valid pdf available")
+    for doc in documents[:2]:
+        print(doc.metadata)
 
     return documents
+
+if __name__ == "__main__":
+    documents = load_pdf()
+    print(f"Loaded {len(documents)} pages.")

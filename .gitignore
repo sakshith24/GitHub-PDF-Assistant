@@ -1,6 +1,25 @@
+# Virtual environment
 .venv/
+
+# Python cache
 __pycache__/
 *.py[cod]
+*.pyo
+
+# Environment variables
 .env
+
+# VS Code
 .vscode/
+
+# Jupyter
 .ipynb_checkpoints/
+
+# RAG project data
+data/repos/
+data/pdfs/
+data/chroma_db/
+
+# OS files
+.DS_Store
+Thumbs.db
