@@ -115,5 +115,6 @@ if destination is None:
 
 documents = load_documents(destination)
 print(len(documents))
-for doc in documents[:3]:
-    print(doc.metadata)
+# for doc in documents[:3]:
+#     print(doc.metadata)
+
