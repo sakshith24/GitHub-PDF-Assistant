@@ -1,7 +1,7 @@
 from langchain_core.documents import Document
 from sentence_transformers import SentenceTransformer
 
-def create_embeddings(documents: list[Document]) -> list[Document]:
+def create_embeddings(documents: list[Document]) -> list[list[float]]:
     model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
     texts = [document.page_content for document in documents]
