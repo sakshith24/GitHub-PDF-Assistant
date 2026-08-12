@@ -1,5 +1,5 @@
 import chromadb
-from langchain_core.documents import Document
+# from langchain_core.documents import Document
 
 def collection_pdf_github(chunks,embeddings):
     chroma_client = chromadb.PersistentClient(path="./data/chroma_db")
