@@ -1,7 +1,8 @@
 if __name__=="__main__":
     from app.rag.retriever import retrieve_query
     query = input("Please enter your question: ")
-    results = retrieve_query(query)
+    n_results = int(input("Enter the number of results: "))
+    results = retrieve_query(query,n_results)
     for i, document in enumerate(results["documents"][0]):
         print(f"\n--- Result {i + 1} ---")
         print(f"Document:\n{document}")

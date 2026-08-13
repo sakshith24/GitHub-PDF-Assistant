@@ -32,9 +32,19 @@ def generate_answer(query,context):
 if __name__ == '__main__':
     from app.rag.retriever import retrieve_query
     query = input("Please enter your question: ") 
-    results = retrieve_query(query)
+    n_results = int(input("enter the number of results: "))
+    results = retrieve_query(query,n_results)
     chunks = results["documents"][0]
+    meta = results["metadatas"][0]
+    sources = []
+    for metadata in meta:
+        source = metadata.get("source")
+        page = metadata.get("page")
+        sources.append(f"{source} - page{page}")
+    sources = "\n\n".join(sources)
     context = "\n\n".join(chunks)
     answer = generate_answer(query,context)
     print("\n Answer: ")
     print(answer)
+    print("\n Source: ")
+    print(sources)
