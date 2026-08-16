@@ -96,6 +96,8 @@ def load_documents(destination) -> list[Document]:
                         page_content= text,
                         metadata = {
                         "path":str(file_path),
+                        # "source_name": repo_name,
+                        "type": "github",
                         "extension": file_path.suffix.lower(),
                         "length":len(text)
                         }

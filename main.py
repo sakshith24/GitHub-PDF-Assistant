@@ -149,7 +149,7 @@ n_results = st.number_input(
 )
 choice1 = st.radio(
     "Source:",
-    ["All" , "PDF" , "GitHUB"]
+    ["All" , "PDF" , "github"]
 )
 
 if st.button("Ask") and query:
@@ -181,7 +181,7 @@ if st.button("Ask") and query:
 
         elif source_type == "github":
             file_path = meta.get(
-                "file_path",
+                "path",
                 meta.get("source", "Unknown")
             )
 

@@ -15,7 +15,7 @@ def collection_pdf_github(chunks,embeddings,source_type,source_name):
         meta["source_name"] = source_name
         metadata.append(meta)
     documents = [chunk.page_content for chunk in chunks]
-    collection.add(
+    collection.upsert(
         ids=ids,
         documents= documents,
         metadatas=metadata,
