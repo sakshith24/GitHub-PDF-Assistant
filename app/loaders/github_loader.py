@@ -39,40 +39,43 @@ def github_url(url) -> tuple[str, str] | None:
         print('INVALID url ...')
         return None
 
-def cloning_needs_to_be_done(url, repo_name) -> Path | None:
+def cloning_needs_to_be_done(url, repo_name,choice) -> Path | None:
     destination = Path("data") / "repos" / repo_name
 
-    need_to_clone = True
-    # CHECK IF THERE IS SAME URL 
     if destination.exists():
-        while True:
-            choice = input(f"This {repo_name} reopsitory already exist, Delete (D) or Reuse (R)?: ").strip().upper()
 
-            if choice in ("D", "R"):
-                break  # Valid input received, exit the validation loop
+        if choice == "Delete":
+            try:
+                shutil.rmtree(destination)
+                need_to_clone = True
 
-            print("Invalid choice! Please enter 'D' or 'R'.\n")
-        if choice == "D":
-            shutil.rmtree(destination)
-            need_to_clone = True
-        elif choice =="R":
-            need_to_clone = False
+            except PermissionError:
+                print(
+                    "Unable to delete the repository. "
+                    "It may be open or being used by another process."
+                )
+                return None
+
+        elif choice == "Reuse":
             return destination
-            
 
-    if need_to_clone:
-        try:
-            Repo.clone_from(url , destination)
-            print("Done with cloning")
-            return destination
-        except GitCommandError as e:
-            error_msg = str(e).lower()
-            if "authentication" in error_msg or "permission denied" in error_msg:
-                print("Authentication failed or access denied")
-            else:
-                print(f"Git cloning error: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+    try:
+        Repo.clone_from(url, destination)
+        print("Done with cloning")
+        return destination
+
+    except GitCommandError as e:
+        error_msg = str(e).lower()
+
+        if "authentication" in error_msg or "permission denied" in error_msg:
+            print("Authentication failed or access denied")
+        else:
+            print(f"Git cloning error: {e}")
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+    return None
 
 
 # READING THE REPO_NAME
@@ -102,19 +105,19 @@ def load_documents(destination) -> list[Document]:
                 continue
     return documents
         
-url = input("Enter the github url : ")
-result = github_url(url)
+# url = input("Enter the github url : ")
+# result = github_url(url)
 
-if result is None:
-    sys.exit(1)
-url, repo_name = result
+# if result is None:
+#     sys.exit(1)
+# url, repo_name = result
 
-destination = cloning_needs_to_be_done(url,repo_name)
-if destination is None:
-    sys.exit(1)
+# destination = cloning_needs_to_be_done(url,repo_name,choice)
+# if destination is None:
+#     sys.exit(1)
 
-documents = load_documents(destination)
-print(len(documents))
+# documents = load_documents(destination)
+# print(len(documents))
 # for doc in documents[:3]:
 #     print(doc.metadata)
 
