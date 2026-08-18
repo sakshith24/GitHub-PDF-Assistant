@@ -110,12 +110,100 @@ answer.
                      Answer
                         |
                         v
-                    Sources
+                    Sources 
+```
+# 6. Tech Stack
 
+Keep this clean:
 
+```markdown
+## Tech Stack
+
+| Component | Technology |
+|---|---|
+| Language | Python |
+| UI | Streamlit |
+| LLM | Gemini |
+| RAG | LangChain |
+| Embeddings | Sentence Transformers |
+| Vector Database | ChromaDB |
+| PDF Processing | PyMuPDF |
+| GitHub Processing | GitPython / GitHub repository cloning |
+| Environment | uv |
+```
+# 7. Installation
+
+This is essential.
+
+Since you're using `uv`, document that instead of only giving pip commands.
+
+```markdown
+## Installation
+
+### 1. Clone the repository
+
+git clone https://github.com/sakshith24/GitHub-PDF-Assistant.git
+
+cd GitHub-PDF-Assistant
+
+### 2. Create the environment
+
+uv sync
+
+### 3. Activate the environment
+
+Windows:
+
+.venv\Scripts\activate
+
+### 4. Configure environment variables
+
+Create a `.env` file:
+
+GEMINI_API_KEY=your_api_key_here
+
+### 5. Run the application
+
+streamlit run main.py
+```
+# 8. RAG prompt / hallucination handling
+
+## Grounded Responses
+
+The assistant is instructed to answer questions using the retrieved
+context.
+
+If the required information is not present in the retrieved context,
+the assistant should indicate that the information was not found
+instead of generating an unsupported answer.
+
+This helps reduce hallucinations and keeps responses grounded in the
+provided documents and repository content.
+
+# 9. Limitations
+
+## Current Limitations
+
+- Retrieval quality depends on chunking and embedding quality.
+- Very broad questions may require more context than the default top-k retrieval.
+- GitHub repository processing currently focuses on supported file types.
+- The assistant works best when questions are specific to the indexed content.
+- The project currently targets public GitHub repositories.
+
+# 10. Future Improvements
+
+- Improve hybrid retrieval
+- Add reranking
+- Improve chunking strategies
+- Add conversational memory
+- Add query rewriting
+- Add multi-query retrieval
+- Add retrieval evaluation
+- Add LLM evaluation
 - Add authentication
 - Add FastAPI backend
 - Add React/Next.js frontend
 - Add Docker deployment
 - Add MCP integration
 - Add agentic workflows
+
